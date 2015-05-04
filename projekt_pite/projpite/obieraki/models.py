@@ -31,7 +31,7 @@ class Staff(models.Model):
 class Course(models.Model):
     Staff_idStaff = models.ForeignKey(User_2)
     Name = models.TextField()
-    ID = models.IntegerField()
+    ID_NO = models.IntegerField()
     ECTS = models.IntegerField()
     Desription = models.TextField()
     Hours = models.IntegerField()
