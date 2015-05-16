@@ -13,6 +13,8 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
+
+'''
 from django.conf.urls import include, url
 from django.contrib import admin
 
@@ -20,3 +22,19 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('obieraki.urls')),
 ]
+'''
+
+from django.conf.urls import patterns, url
+from django.contrib import admin
+from obieraki.views import *
+
+
+urlpatterns = patterns('',
+    (r'^admin/', admin.site.urls),
+    (r'^$', main_site),
+    
+    # log in
+    (r'^login/$','django.contrib.auth.views.student_login'),
+    #log out
+    (r'^logout/$',logout_page)
+)
