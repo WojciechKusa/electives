@@ -24,17 +24,19 @@ urlpatterns = [
 ]
 '''
 
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
+import os.path
 from django.contrib import admin
 from obieraki.views import *
 
+#admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^admin/', admin.site.urls),
+    (r'^admin/', include(admin.site.urls)),
     (r'^$', main_site),
     
     # log in
-    (r'^login/$','django.contrib.auth.views.student_login'),
+    (r'^registration/login.html$',login_page),
     #log out
     (r'^logout/$',logout_page)
 )
