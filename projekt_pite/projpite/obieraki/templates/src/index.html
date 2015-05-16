@@ -47,22 +47,26 @@
 									<span class="icon-bar"></span>
 									<span class="icon-bar"></span>
 									</button>
-									<a class="navbar-brand" href="index.php">Homepage</a>
+									<a class="navbar-brand" href="">Homepage</a>
 								</div>
 								<div class="navbar-collapse collapse">
 									<ul class="nav navbar-nav">
 									<li><a href="index.php?controller=store&amp;action=courses">Courses</a></li>
 									<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Log in<b class="caret"></b></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.is_authenticated %}Zalogowany użytkownik: <b>{{user.name}}</b>   
+										{% else %}Log in{% endif %}<b class="caret"></b></a>
 									<ul class="dropdown-menu">
 									<!--<li><a href="index.php?controller=student&amp;action=logIn">Student log in</a></li>-->
-									<li><a href="../registration/login.html">Student log in</a></li>
+									<li><a href="/login/">Student log in</a></li>
 									<li class="divider"></li>
-									<li><a href="index.php?controller=staff&amp;action=logIn">Staff log in</a></li>
+									<!--<li><a href="index.php?controller=staff&amp;action=logIn">Staff log in</a></li>-->
+									<li><a href="/login/">Staff log in</a></li>
 									<li class="divider"></li>
-									<li><a href="index.php?controller=admin&amp;action=logIn">Admin log in</a></li>
+									<!--<li><a href="index.php?controller=admin&amp;action=logIn">Admin log in</a></li>-->
+									<li><a href="/login/">Admin log in</a></li>
 									</ul>
 									</li>
+									<li>{% if user.is_authenticated %}<a href="/logout/">wyloguj się</a>{% else %}<a href="/register/">rejestracja</a>{% endif %}</li>
 									</ul>
 								</div>
 							</div>
@@ -80,6 +84,7 @@
 			<h2>Elective subjects</h2>
 		 </div>
 
+		
 
 		<center>
 			<footer class="navbar-fixed-bottom" style="background-color:white">

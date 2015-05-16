@@ -32,11 +32,12 @@ from obieraki.views import *
 #admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^admin/', include(admin.site.urls)),
     (r'^$', main_site),
-    
-    # log in
-    (r'^registration/login.html$',login_page),
+    (r'^admin/', include(admin.site.urls)),
+    (r'^src/user_information.html$', user_information),
+    #(r'^register/$',register_page),
+    #log in
+    (r'^login/$','django.contrib.auth.views.login'),
     #log out
     (r'^logout/$',logout_page)
 )

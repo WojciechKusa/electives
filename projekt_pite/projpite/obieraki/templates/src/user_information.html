@@ -82,14 +82,14 @@
 
 		<center>
 			<br /> <br /> <br />
-<h2>Logowanie do bazy przedmiotów obieralnych</h2>
+<h2>Information about your profile:</h2>
 <p>
 <div style="margin-left:35%;margin-right:35%;">
 <fieldset>
     <form method="post" action=".">{% csrf_token %}
     <div style="text-align:left";>{{ form.as_p }}</div>
-    <input type="hidden" name="next" value="/src/user_information.html" />
-    <input type="submit" value="Log in"/>    <input type="reset" value="Reset"/>
+    <input type="hidden" name="next" value="/" />
+    <input type="submit" value="###"/>    <input type="reset" value="###"/>
   </form>
 </fieldset>
 </div>
