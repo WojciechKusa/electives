@@ -28,14 +28,14 @@ from django.conf.urls import patterns, url, include
 import os.path
 from django.contrib import admin
 from obieraki.views import *
-
+from obieraki.forms import *
 #admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', main_site),
     (r'^admin/', include(admin.site.urls)),
     (r'^src/user_information.html$', user_information),
-    #(r'^register/$',register_page),
+    (r'^register/$', register_page),
     #log in
     (r'^login/$','django.contrib.auth.views.login'),
     #log out
