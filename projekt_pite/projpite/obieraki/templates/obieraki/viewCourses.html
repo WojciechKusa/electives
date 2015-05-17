@@ -51,7 +51,7 @@
 								</div>
 								<div class="navbar-collapse collapse">
 									<ul class="nav navbar-nav">
-									<li><a href="/courses/">Courses</a></li>
+									<li><a href="index.php?controller=store&amp;action=courses">Courses</a></li>
 									<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.is_authenticated %}Zalogowany użytkownik: <b>{{user.name}}</b>   
 										{% else %}Log in{% endif %}<b class="caret"></b></a>
@@ -79,13 +79,19 @@
 		</header>
 		<br />
 		<br />
-
-		<div class="jumbotron">
-			<h2>Elective subjects</h2>
-		 </div>
-
 		
-
+		
+		<center>
+			<h2>List of courses:</h2>
+		</center>
+		{% for ID_NO in courses %}
+			<div style="margin-left:35%;margin-right:35%;">
+				<h3>{{ courses.Name }} ECTS: {{ courses.ECTS }}</h3>
+				<h4>{{ courses.Description }}</h4>
+			</div>
+		{% endfor %}
+		
+		
 		<center>
 			<footer class="navbar-fixed-bottom" style="background-color:white">
 				<p>&copy; 2015 PiTE</p>
@@ -95,4 +101,3 @@
 	
 	</body>
 </html>
-
