@@ -1,15 +1,15 @@
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
         VALUES ('Admin', 'Admin', 'admin@agh.edu.pl', 'admin', 'admin', 99);
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
-        VALUES ('Juliusz', 'Trabka', 'trabka@agh.edu.pl', 'student1', 'password', 1);
+        VALUES ('Juliusz', 'Trabka', 'trabka@agh.edu.pl', 'student1', 'student1', 1);
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
-        VALUES ('Maciej', 'Lit', 'lit@agh.edu.pl', 'student2', 'password', 1);
+        VALUES ('Maciej', 'Lit', 'lit@agh.edu.pl', 'student2', 'student2', 1);
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
-        VALUES ('Mateusz', 'Molibdenowy', 'molibdenowy@agh.edu.pl', 'staff1', 'password', 2);
+        VALUES ('Mateusz', 'Molibdenowy', 'molibdenowy@agh.edu.pl', 'staff1', 'staff1', 2);
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
-        VALUES ('Janusz', 'Tytanowy', 'tytanowy@agh.edu.pl', 'staff2', 'password', 2);
+        VALUES ('Janusz', 'Tytanowy', 'tytanowy@agh.edu.pl', 'staff2', 'staff2', 2);
 INSERT INTO obieraki_user_2(Name , Surname, Mail, Login, Password_2, Permission) 
-        VALUES ('Tadeusz', 'Wolframowy', 'wolframowy@agh.edu.pl', 'staff3', 'password', 2);
+        VALUES ('Tadeusz', 'Wolframowy', 'wolframowy@agh.edu.pl', 'staff3', 'staff3', 2);
 
 
 INSERT INTO obieraki_class_type(Name, MinStudents, MaxStudents) VALUES ('Lecture', 7, 150);
@@ -28,9 +28,9 @@ INSERT INTO obieraki_staff(User_2_idUser_2_id, Department, Title) VALUES (6, 'De
 
 
 INSERT INTO obieraki_course(Staff_idStaff_id, Name, ID_NO, ECTS, Desription, Hours, MinStudents, MaxStudents, Semester) 
-        VALUES (1, 'Quantum Physics', 101, 8, 'Fajny opis kursu. wow wow', 120, 15, 60, 0);
+        VALUES (1, 'Quantum Physics', 101, 8, 'Quantum Physics - Course description', 120, 15, 60, 0);
 INSERT INTO obieraki_course(Staff_idStaff_id, Name, ID_NO, ECTS, Desription, Hours, MinStudents, MaxStudents, Semester) 
-        VALUES (2, 'Introduction to databases', 102, 4, 'Fajny opis kursu2222. wow wow', 60, 15, 30, 1);
+        VALUES (2, 'Introduction to databases', 102, 4, 'Introduction to databases - Course description', 60, 15, 30, 1);
 
 
 INSERT INTO obieraki_student_has_course(Student_idStudent_id, Course_idCourse_id) VALUES (1, 1);
