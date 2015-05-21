@@ -51,9 +51,22 @@
 								</div>
 								<div class="navbar-collapse collapse">
 									<ul class="nav navbar-nav">
-									<li><a href="/courses/">Courses</a></li>
-									<li>{% if user.is_authenticated %}Logged User: <b>{{user.name}}</b> {% else %}<a href="/login/">Log in</a>{% endif %}</li>
-									<li>{% if user.is_authenticated %}<a href="/logout/">Log out</a>{% else %}<a href="/register/">Register</a>{% endif %}</li>
+									<li><a href="index.php?controller=store&amp;action=courses">Courses</a></li>
+									<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if user.is_authenticated %}Zalogowany użytkownik: <b>{{user.name}}</b>   
+										{% else %}Log in{% endif %}<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+									<!--<li><a href="index.php?controller=student&amp;action=logIn">Student log in</a></li>-->
+									<li><a href="/login/">Student log in</a></li>
+									<li class="divider"></li>
+									<!--<li><a href="index.php?controller=staff&amp;action=logIn">Staff log in</a></li>-->
+									<li><a href="/login/">Staff log in</a></li>
+									<li class="divider"></li>
+									<!--<li><a href="index.php?controller=admin&amp;action=logIn">Admin log in</a></li>-->
+									<li><a href="/login/">Admin log in</a></li>
+									</ul>
+									</li>
+									<li>{% if user.is_authenticated %}<a href="/logout/">wyloguj się</a>{% else %}<a href="/register/">rejestracja</a>{% endif %}</li>
 									</ul>
 								</div>
 							</div>
@@ -71,36 +84,12 @@
 		<center>
 			<h2>List of courses:</h2>
 		</center>
-
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>ECTS</th>
-					<th>Hours</th>
-					<th>Min students</th>
-	                <th>Max students</th>
-	                <th>Semester</th>
-	                <th></th>
-	            </tr>
-	        </thead>
-			<tbody>
-				{% for ID_NO in courses %}
-					<tr>
-						<td>{{ courses.ID_NO }}</td>
-						<td>{{ courses.Name }}</td>
-						<td>{{ courses.ECTS }}</td>
-						<td>{{ courses.Hours }}</td>
-						<td>{{ courses.MinStudents }}</td>
-						<td>{{ courses.MaxStudents }}</td>
-						<td>{{ courses.Semester }}</td>
-						<td></td>
-		            </tr>
-        		{% endfor %}
-			</tbody>
-		</table>
-
+		{% for ID_NO in courses %}
+			<div style="margin-left:35%;margin-right:35%;">
+				<h3>{{ courses.Name }} ECTS: {{ courses.ECTS }}</h3>
+				<h4>{{ courses.Description }}</h4>
+			</div>
+		{% endfor %}
 		
 		
 		<center>
