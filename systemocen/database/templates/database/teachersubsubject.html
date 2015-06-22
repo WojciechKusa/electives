@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Wirtualny dziekanat - Panel nauczyciela</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Nazwa zajęć: {{subsubject}}</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Studenci</th>
+        <th>Szczegóły</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+	        <tr><td>{{student.user.first_name}} {{student.user.last_name}}</td><td><a href="{%url 'subteacherstudent' subsubject.pk student.pk %}" class="btn btn-info" role="button">SZCZEGÓŁY</a></td></tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
