@@ -286,6 +286,7 @@ def teacherchangegrade(request):
             term1 = request.POST['term1']
             term2 = request.POST['term2']
             term3 = request.POST['term3']
+            final = request.POST['final']
             subject_id = request.POST['subject_id']
             subject_type = request.POST['subject_type']
             st = Student.objects.get(pk = request.POST['student_id'])
