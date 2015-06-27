@@ -291,9 +291,9 @@ def teacherchangegrade(request):
             st = Student.objects.get(pk = request.POST['student_id'])
             te = Teacher.objects.get(user=request.user)
             if subject_type == 'subject' :
-            	subject = Subject.objects.get(pk = subject_id)
-            	subjectStudent = SubjectsStudents.objects.get(subject_id = subject, student_id = st)
-            	finalGrade = subjectStudent.final_grade_id
+				subject = Subject.objects.get(pk = subject_id)
+				subjectStudent = SubjectsStudents.objects.get(subject_id = subject, student_id = st)
+				finalGrade = subjectStudent.final_grade_id
 				finalGrade.term1_value = term1;
 				finalGrade.term1_date = timezone.now()
 				finalGrade.term2_value = term2;
@@ -302,12 +302,12 @@ def teacherchangegrade(request):
 				finalGrade.term3_date = timezone.now()
 				finalGrade.final_value = final;
 				finalGrade.final_date = timezone.now()	
-            	finalGrade.save()
+				finalGrade.save()
             elif subject_type == 'subsubject':
-            	subsubject = Subsubject.objects.get(pk = subject_id)
-            	subsubjectStudent = SubsubjectsStudents.objects.get(sub_subject_id = subsubject, student_id = st)
-            	finalGrade = subsubjectStudent.final_grade_id
-            	finalGrade.term1_value = term1;
+				subsubject = Subsubject.objects.get(pk = subject_id)
+				subsubjectStudent = SubsubjectsStudents.objects.get(sub_subject_id = subsubject, student_id = st)
+				finalGrade = subsubjectStudent.final_grade_id
+				finalGrade.term1_value = term1;
 				finalGrade.term1_date = timezone.now()
 				finalGrade.term2_value = term2;
 				finalGrade.term2_date = timezone.now()
@@ -315,7 +315,7 @@ def teacherchangegrade(request):
 				finalGrade.term3_date = timezone.now()
 				finalGrade.final_value = final;
 				finalGrade.final_date = timezone.now()	
-            	finalGrade.save()
+				finalGrade.save()
      
             
 		
