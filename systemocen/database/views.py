@@ -70,6 +70,22 @@ def studentpage(request, page_id):
             return HttpResponse("Wiadomosc nie istnieje")
     else:
         return HttpResponse("Nie zalogowany")
+        
+def teacherviewsubjectfinalgrades(request, sbjct_id):
+    if request.user.is_authenticated():
+        try:
+            te = Teacher.objects.get(user=request.user)
+            subject = Subject.objects.get(pk=sbjct_id)
+            if subject.teacher_id != te:
+                return HttpResponse("Nie prowadzisz tego przedmiotu")
+            subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(subject_id=sbjct_id))
+            return render(request, 'database/teacherfinalgrades.html', {'teacher': te, 'subject': subject, 'subjectsStudents': subjectsStudents})
+        except Teacher.DoesNotExist:
+            return HttpResponse("Nie ma nauczyciela")
+        except Subject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+    else:
+        return HttpResponse("Niezalogowany")
 
 
 def teacherpage(request, page_id):
@@ -264,6 +280,59 @@ def teacheraddgrade(request):
     else:
         return HttpResponse("Niezalogowany")
 
+def teacherchangegrade(request):
+    if request.user.is_authenticated():
+        try:
+            term1 = request.POST['term1']
+            term2 = request.POST['term2']
+            term3 = request.POST['term3']
+            subject_id = request.POST['subject_id']
+            subject_type = request.POST['subject_type']
+            st = Student.objects.get(pk = request.POST['student_id'])
+            te = Teacher.objects.get(user=request.user)
+            if subject_type == 'subject' :
+            	subject = Subject.objects.get(pk = subject_id)
+            	subjectStudent = SubjectsStudents.objects.get(subject_id = subject, student_id = st)
+            	finalGrade = subjectStudent.final_grade_id
+				finalGrade.term1_value = term1;
+				finalGrade.term1_date = timezone.now()
+				finalGrade.term2_value = term2;
+				finalGrade.term2_date = timezone.now()
+				finalGrade.term3_value = term3;
+				finalGrade.term3_date = timezone.now()
+				finalGrade.final_value = final;
+				finalGrade.final_date = timezone.now()	
+            	finalGrade.save()
+            elif subject_type == 'subsubject':
+            	subsubject = Subsubject.objects.get(pk = subject_id)
+            	subsubjectStudent = SubsubjectsStudents.objects.get(sub_subject_id = subsubject, student_id = st)
+            	finalGrade = subsubjectStudent.final_grade_id
+            	finalGrade.term1_value = term1;
+				finalGrade.term1_date = timezone.now()
+				finalGrade.term2_value = term2;
+				finalGrade.term2_date = timezone.now()
+				finalGrade.term3_value = term3;
+				finalGrade.term3_date = timezone.now()
+				finalGrade.final_value = final;
+				finalGrade.final_date = timezone.now()	
+            	finalGrade.save()
+     
+            
+		
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except Student.DoesNotExist:
+            return HttpResponse("Dany student nie istnieje")
+        except SubjectsStudents.DoesNotExist:
+            return HttpResponse("Student nie jest zapisany na ten przedmiot")
+        except Teacher.DoesNotExist:
+            return HttpResponse("Nie ma nauczyciela")
+        except Subject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+        except Subsubject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+            
+    else:
+        return HttpResponse("Niezalogowany")
 
 def teacherdeletesubgrade(request):
     if request.user.is_authenticated():

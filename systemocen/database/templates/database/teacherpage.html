@@ -67,7 +67,7 @@
                     </thead>
                     <tbody>
                     {% for subject in subjects %}
-                        <tr><td>{{subject.name}}</td><td> <a href="{% url 'teachersubject' subject.pk %}" class="btn btn-info" role="button" >SZCZEGÓŁY</a></td></tr>
+                        <tr><td>{{subject.name}}</td><td> <a href="{% url 'teachersubject' subject.pk %}" class="btn btn-info" role="button" >SZCZEGÓŁY</a>&nbsp;<a href="{% url 'teacherviewsubjectfinalgrades' subject.pk %}" class="btn btn-info" role="button" >OCENY</a></td></tr>
                     {% endfor %}
                     </tbody>
                   </table>
