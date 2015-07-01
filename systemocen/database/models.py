@@ -73,8 +73,10 @@ class SubjectsStudents(models.Model):
     student_id = models.ForeignKey(Student)
     subject_id = models.ForeignKey(Subject)
     final_grade_id = models.OneToOneField(FinalGrade)
+   
     def __str__(self):
         return self.student_id.user.username + ' ' + self.subject_id.name
+
         
         
 class SubsubjectsStudents(models.Model):
@@ -92,3 +94,21 @@ class Message(models.Model):
     contents = models.CharField(max_length = 400)
     is_read = models.BooleanField()
     date = models.DateTimeField()
+
+
+class Survey(models.Model):
+    student_id = models.ForeignKey(Student)
+    teacher_id = models.ForeignKey(Teacher)
+    subject_id = models.ForeignKey(Subject)
+    GRADE_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+    )
+    teacher_grade = models.IntegerField(choices=GRADE_CHOICES)
+    comments = models.CharField(max_length=1000)
+    def __str__(self):
+        return self.teacher_id.user.name
+    

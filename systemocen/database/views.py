@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message
+from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message, Survey
 
 
 def index(request):
@@ -55,6 +55,7 @@ def studentpage(request, page_id):
             subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(student_id = st))
             subsubjectsStudents = (subsubjectStudent for subsubjectStudent in SubsubjectsStudents.objects.filter(student_id = st))
             subjects = (subjects.subject_id for subjects in st.subjectsstudents_set.all())
+            survey = (subjectStudent for subjectStudent in Survey.objects.filter(student_id=st))
 
             if(request.POST.get('message_id', False)):
                 messageToMarkRead = Message.objects.filter(student_id = st).filter(is_read = False).get(pk = request.POST.get('message_id', False))
@@ -63,7 +64,7 @@ def studentpage(request, page_id):
             messages = Message.objects.filter(student_id = st).filter(is_read = False).order_by('-date')
             allMessages = Message.objects.filter(student_id = st).order_by('-date')
             return render(request, 'database/studentpage.html', {'student': st, 'subjectsStudents': subjectsStudents, 'messages':messages, 'all_messages' : allMessages ,
-                                                                 'page_id':page_id, 'subsubjectsStudents' : subsubjectsStudents})
+                                                                 'page_id':page_id, 'subsubjectsStudents' : subsubjectsStudents, 'survey':survey})
         except Student.DoesNotExist:
             return HttpResponse("Niema studenta")
         except Message.DoesNotExist:
