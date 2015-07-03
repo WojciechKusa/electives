@@ -29,6 +29,7 @@ class Student(models.Model):
         (7, '7'),
         (8, '8'),
         (9, '9'),
+        (10, '10')
     )
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to='student_profile_images', blank=True)
@@ -50,6 +51,7 @@ class Teacher(models.Model):
 class Subject(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     name = models.CharField(max_length=20)
+    students = models.ManyToManyField(Student,through='SubjectsStudents')
 
     def __str__(self):
         return self.name
@@ -130,11 +132,12 @@ class SubjectsStudents(models.Model):
         (7, '7'),
         (8, '8'),
         (9, '9'),
+        (10,'10')
     )
-    student_id = models.ForeignKey(Student)
-    subject_id = models.ForeignKey(Subject)
-    final_grade_id = models.OneToOneField(FinalGrade)
-    term = models.IntegerField(choices=TERM_CHOICES,default='1')
+    student_id = models.ForeignKey(Student,blank=True,null=True)
+    subject_id = models.ForeignKey(Subject,blank=True,null=True)
+    final_grade_id = models.OneToOneField(FinalGrade,blank=True,null=True)
+    term_number = models.IntegerField(choices=TERM_CHOICES,default='1',blank=True,null=True)
 
     def __str__(self):
         return self.student_id.user.username + ' ' + self.subject_id.name

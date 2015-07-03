@@ -2,50 +2,52 @@ from django.contrib import admin
 
 from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message, Survey
 
-#--------------admin_models
-# class TermInLine(admin.TabularInline):
-#     model = Term
-#     max_num = 1
-#     min_num = 1
+##-------------inlines
+class SubjectsStudentsInline(admin.TabularInline):
+    model = SubjectsStudents
+    extra = 1
 
-class SubsubjectInLine(admin.TabularInline):
+class StudentInline(admin.TabularInline):
+    model = Student
+    extra = 3
+
+class SubsubjectInline(admin.TabularInline):
     model = Subsubject
+    extra = 1
+
+class SubjectInline(admin.TabularInline):
+    model = Subject
     extra = 1
 
 class FinalGradeChoice(admin.StackedInline):
     model = FinalGrade
     extra = 1
 
+##--------------admin_models
+
 class StudentAdmin(admin.ModelAdmin):
     fields = ['user','term_number']
-
-    #list_display = ['user']
-
-class FinalGradeAdmin(admin.ModelAdmin):
-    pass
-    #list_display = ['term1_value','term2_value']
-
+    inlines = [SubjectsStudentsInline]
 
 class SubjectAdmin(admin.ModelAdmin):
     fieldsets = [
         ('None', {'fields': ['teacher_id','name']}),
         #('Subsubjects' , {'inlines': [SubsubjectInLine], 'classes': 'collapse'})
     ]
-    #fields = ['teacher_id','name']
-    inlines = [SubsubjectInLine]
+    inlines = [SubsubjectInline,SubjectsStudentsInline]
 
 
 
 
 
-#--------------models_registration
+##--------------models_registration
 
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Teacher)
 admin.site.register(Subject,SubjectAdmin)
 admin.site.register(SubsubjectType)
 #admin.site.register(Subsubject)
-#admin.site.register(FinalGrade,FinalGradeAdmin)
+
 admin.site.register(FinalGrade)
 admin.site.register(Subgrade)
 #admin.site.register(SubjectsStudents)
