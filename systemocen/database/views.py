@@ -55,6 +55,8 @@ def studentpage(request, page_id):
             subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(student_id = st))
             subsubjectsStudents = (subsubjectStudent for subsubjectStudent in SubsubjectsStudents.objects.filter(student_id = st))
             subjects = (subjects.subject_id for subjects in st.subjectsstudents_set.all())
+            subjectsAct= (subjectAct for subjectAct in SubjectsStudents.objects.filter(term_id = st.term_id))
+            subjectsArch = (subjectArch for subjectArch in SubjectsStudents.objects.exclude(term_id = st.term_id).order_by('term'))
             survey = (subjectStudent for subjectStudent in Survey.objects.filter(student_id=st))
 
             if(request.POST.get('message_id', False)):
@@ -64,7 +66,7 @@ def studentpage(request, page_id):
             messages = Message.objects.filter(student_id = st).filter(is_read = False).order_by('-date')
             allMessages = Message.objects.filter(student_id = st).order_by('-date')
             return render(request, 'database/studentpage.html', {'student': st, 'subjectsStudents': subjectsStudents, 'messages':messages, 'all_messages' : allMessages ,
-                                                                 'page_id':page_id, 'subsubjectsStudents' : subsubjectsStudents, 'survey':survey})
+                                                                 'page_id':page_id, 'subsubjectsStudents' : subsubjectsStudents, 'subjectsAct' : subjectsAct, 'subjectsArch' : subjectsArch,'survey':survey})
         except Student.DoesNotExist:
             return HttpResponse("Niema studenta")
         except Message.DoesNotExist:

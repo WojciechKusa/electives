@@ -3,6 +3,10 @@ from django.contrib import admin
 from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message, Survey
 
 #--------------admin_models
+# class TermInLine(admin.TabularInline):
+#     model = Term
+#     max_num = 1
+#     min_num = 1
 
 class SubsubjectInLine(admin.TabularInline):
     model = Subsubject
@@ -13,8 +17,8 @@ class FinalGradeChoice(admin.StackedInline):
     extra = 1
 
 class StudentAdmin(admin.ModelAdmin):
-    fields = ['user']
-    #inlines = [FinalGradeChoice]
+    fields = ['user','term_number']
+
     #list_display = ['user']
 
 class FinalGradeAdmin(admin.ModelAdmin):
@@ -36,7 +40,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 #--------------models_registration
 
-admin.site.register(Student)
+admin.site.register(Student,StudentAdmin)
 admin.site.register(Teacher)
 admin.site.register(Subject,SubjectAdmin)
 admin.site.register(SubsubjectType)
@@ -48,6 +52,5 @@ admin.site.register(Subgrade)
 #admin.site.register(SubsubjectsStudents)
 admin.site.register(Message)
 admin.site.register(Survey)
-
 
 

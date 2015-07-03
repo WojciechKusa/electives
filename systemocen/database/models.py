@@ -2,9 +2,38 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+# class Term(models.Model):
+#     TERM_CHOICES = (
+#         (1, '1'),
+#         (2, '2'),
+#         (3, '3'),
+#         (4, '4'),
+#         (5, '5'),
+#         (6, '6'),
+#         (7, '7'),
+#         (8, '8'),
+#         (9, '9'),
+#     )
+#     term_number = models.IntegerField(choices=TERM_CHOICES)
+#     def __str__(self):
+#         return 'term '+self.term_number.__str__()
+
 class Student(models.Model):
+    TERM_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
+    )
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to='student_profile_images', blank=True)
+    #term_id = models.ForeignKey(Term)
+    term_number = models.IntegerField(choices=TERM_CHOICES,default='1')
 
     def __str__(self):
         return self.user.username
@@ -90,23 +119,31 @@ class Subgrade(models.Model):
     def __str__(self):
         return self.value + ' ' + self.student_id.user.username + ' ' + self.sub_subject_id.subject_id.name + '-' + self.sub_subject_id.subsubjecttype_id.name
 
-
-
 class SubjectsStudents(models.Model):
+    TERM_CHOICES = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
+    )
     student_id = models.ForeignKey(Student)
     subject_id = models.ForeignKey(Subject)
     final_grade_id = models.OneToOneField(FinalGrade)
-   
+    term = models.IntegerField(choices=TERM_CHOICES,default='1')
+
     def __str__(self):
         return self.student_id.user.username + ' ' + self.subject_id.name
 
-        
-        
+
 class SubsubjectsStudents(models.Model):
     student_id = models.ForeignKey(Student)
     sub_subject_id = models.ForeignKey(Subsubject)
     final_grade_id = models.OneToOneField(FinalGrade)
-
 
     def __str__(self):
         return self.student_id.user.username 
@@ -116,7 +153,7 @@ class Message(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     contents = models.CharField(max_length = 400)
     is_read = models.BooleanField()
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
 
 class Survey(models.Model):
     student_id = models.ForeignKey(Student)
