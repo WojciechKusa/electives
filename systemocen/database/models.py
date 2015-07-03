@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class Student(models.Model):
     user = models.OneToOneField(User)
@@ -41,16 +41,28 @@ class Subsubject(models.Model):
         
         
 class FinalGrade(models.Model):
+    #look out for example if you will count average of grades!!!
+    GRADE_CHOICES = (
+        ('2.0', '2.0'),
+        ('3.0', '3.0'),
+        ('3.5', '3.5'),
+        ('4.0', '4.0'),
+        ('4.5', '4.5'),
+        ('5.0', '5.0'),
+        ('zal', 'zal'),
+        ('nb', 'nb'),
+        ('-','-')
+    )
     student_id = models.ForeignKey(Student)
     subsubject_id = models.ForeignKey(Subsubject)
-    final_value = models.CharField(max_length=3, default='-')
-    final_date = models.DateTimeField()
-    term1_value = models.CharField(max_length=3, default='-')
-    term1_date = models.DateTimeField()
-    term2_value = models.CharField(max_length=3, default='-')
-    term2_date = models.DateTimeField()
-    term3_value = models.CharField(max_length=3, default='-')
-    term3_date = models.DateTimeField()
+    final_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    final_date = models.DateTimeField(blank=True,null=True)
+    term1_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term1_date = models.DateTimeField(blank=True,null=True)
+    term2_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term2_date = models.DateTimeField(blank=True,null=True)
+    term3_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term3_date = models.DateTimeField(blank=True,null=True)
     
     def __str__(self):
         return self.subsubject_id.subject_id.name + ' ( ' + self.subsubject_id.subsubjecttype_id.name + ' ) ' + self.student_id.user.first_name + ' ' + self.student_id.user.last_name
@@ -58,11 +70,22 @@ class FinalGrade(models.Model):
 
 
 class Subgrade(models.Model):
+    GRADE_CHOICES = (
+        ('2.0', '2.0'),
+        ('3.0', '3.0'),
+        ('3.5', '3.5'),
+        ('4.0', '4.0'),
+        ('4.5', '4.5'),
+        ('5.0', '5.0'),
+        ('zal', 'zal'),
+        ('nb', 'nb'),
+        ('-','-')
+    )
     student_id = models.ForeignKey(Student)
     teacher_id = models.ForeignKey(Teacher)
     sub_subject_id = models.ForeignKey(Subsubject)
-    value = models.CharField(max_length=3)
-    date = models.DateTimeField(auto_now_add=True)
+    value = models.CharField(max_length=3,choices=GRADE_CHOICES)
+    date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.value + ' ' + self.student_id.user.username + ' ' + self.sub_subject_id.subject_id.name + '-' + self.sub_subject_id.subsubjecttype_id.name
@@ -93,8 +116,7 @@ class Message(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     contents = models.CharField(max_length = 400)
     is_read = models.BooleanField()
-    date = models.DateTimeField()
-
+    date = models.DateTimeField(auto_now_add=True)
 
 class Survey(models.Model):
     student_id = models.ForeignKey(Student)
@@ -105,10 +127,11 @@ class Survey(models.Model):
         (2, '2'),
         (3, '3'),
         (4, '4'),
-        (5, '5'),
+        (5, '5')
     )
-    teacher_grade = models.IntegerField(choices=GRADE_CHOICES)
-    comments = models.CharField(max_length=1000)
+    teacher_grade = models.IntegerField(choices= GRADE_CHOICES)
+    comments = models.CharField(max_length=1000,blank=True,null=True)
+    date = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.teacher_id.user.name
     
