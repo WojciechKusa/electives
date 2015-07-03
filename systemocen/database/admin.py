@@ -26,14 +26,14 @@ class FinalGradeChoice(admin.StackedInline):
 ##--------------admin_models
 
 class StudentAdmin(admin.ModelAdmin):
-    fields = ['user','term_number']
+    #fields = ['user','term_number']
     inlines = [SubjectsStudentsInline]
 
 class SubjectAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('None', {'fields': ['teacher_id','name']}),
+    #fieldsets = [
+        #('None', {'fields': ['teacher_id','name']}),
         #('Subsubjects' , {'inlines': [SubsubjectInLine], 'classes': 'collapse'})
-    ]
+    #]
     inlines = [SubsubjectInline,SubjectsStudentsInline]
 
 

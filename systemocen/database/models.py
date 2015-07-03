@@ -36,6 +36,8 @@ class Student(models.Model):
     #term_id = models.ForeignKey(Term)
     term_number = models.IntegerField(choices=TERM_CHOICES,default='1')
 
+    field_of_study = models.CharField(max_length=50,blank=True,null=True)
+
     def __str__(self):
         return self.user.username
 
@@ -43,7 +45,15 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to='teacher_profile_images', blank=True)
-	
+    
+    title = models.CharField(max_length=30, blank=True,null=True)
+    current_position = models.CharField(max_length=40, blank=True,null=True)
+    faculty = models.CharField(max_length=40, blank=True,null=True)
+    department = models.CharField(max_length=40, blank=True,null=True)
+    room = models.CharField(max_length=20, blank=True,null=True)
+    phone_number = models.CharField(max_length=10, blank=True,null=True)
+    office_hours = models.CharField(max_length=30, blank=True,null=True)
+
     def __str__(self):
         return self.user.username
 
@@ -51,13 +61,28 @@ class Teacher(models.Model):
 class Subject(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     name = models.CharField(max_length=20)
-    students = models.ManyToManyField(Student,through='SubjectsStudents')
+
+    students = models.ManyToManyField(Student,through='SubjectsStudents',blank=True,null=True)
+
+    course_homepage = models.CharField(max_length=20, blank=True,null=True)
+    ECTS = models.IntegerField(default=3)
+    exam = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         return self.name
 
+
 class SubsubjectType(models.Model):
-    name = models.CharField(max_length=20)
+    SUBSUBJECT_TYPE_CHOICES = (
+        ('LEC', 'Lecture'),
+        ('CLA', 'Auditory classes'),
+        ('LAB', 'Laboratory classes'),
+        ('PRO', 'Project classes'),
+        ('SEM', 'Seminar classes'),
+        ('CON', 'Conversation seminars'),
+        ('OTH', 'Other'),
+    )
+    name = models.CharField(choices=SUBSUBJECT_TYPE_CHOICES, max_length=3)
 
     def __str__(self):
         return self.name
@@ -66,6 +91,7 @@ class Subsubject(models.Model):
     subject_id = models.ForeignKey(Subject)
     teacher_id = models.ForeignKey(Teacher)
     subsubjecttype_id = models.ForeignKey(SubsubjectType)
+    hours = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.subject_id.name + ' (' + self.subsubjecttype_id.name + ') - ' + self.teacher_id.user.first_name + ' ' + self.teacher_id.user.last_name
@@ -132,7 +158,7 @@ class SubjectsStudents(models.Model):
         (7, '7'),
         (8, '8'),
         (9, '9'),
-        (10,'10')
+        (10, '10')
     )
     student_id = models.ForeignKey(Student,blank=True,null=True)
     subject_id = models.ForeignKey(Subject,blank=True,null=True)
