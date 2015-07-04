@@ -166,7 +166,10 @@ class SubjectsStudents(models.Model):
     term_number = models.IntegerField(choices=TERM_CHOICES,default='1',blank=True,null=True)
 
     def __str__(self):
-        return self.student_id.user.username + ' ' + self.subject_id.name
+        if (self.subject_id is None) or (self.student_id is None) :
+            return 'Subject not assigned.'
+        else:
+            return self.student_id.user.username + ' ' + self.subject_id.name
 
 
 class SubsubjectsStudents(models.Model):
