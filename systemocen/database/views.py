@@ -358,7 +358,25 @@ def teacherdeletesubgrade(request):
             return HttpResponse("Brak przedmiotu")
     else:
         return HttpResponse("Niezalogowany")
+        
+def addstudentstosubject(request):
+	if request.user.is_authenticated():
+		if request.user.is_superuser:
+			try:
+				st = Student.objects.all()
+				subjects = Subject.objects.all()
+				return render(request, 'database/addstudentstosubject.html', {'student': st, 'subject': subjects})
+			except Subject.DoesNotExist:
+				return HttpResponse("Brak przedmiotu")
+		else:
+			return HttpResponse("Brak autoryzacji")
+	else:
+		return HttpResponse("Niezalogowany")
 
+def addstudentstosubjectform(request):
+	return
+	#PLACEHOLDER
+	
 
 def teacheraddsubgrade(request):
     if request.user.is_authenticated():
