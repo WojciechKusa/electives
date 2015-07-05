@@ -55,8 +55,8 @@ def studentpage(request, page_id):
             subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(student_id = st))
             subsubjectsStudents = (subsubjectStudent for subsubjectStudent in SubsubjectsStudents.objects.filter(student_id = st))
             subjects = (subjects.subject_id for subjects in st.subjectsstudents_set.all())
-            subjectsAct= (subjectAct for subjectAct in SubjectsStudents.objects.filter(term_number = st.term_number))
-            subjectsArch = (subjectArch for subjectArch in SubjectsStudents.objects.exclude(term_number = st.term_number).order_by('term_number'))
+            subjectsAct= (subjectAct for subjectAct in SubjectsStudents.objects.filter(student_id = st).filter(term_number = st.term_number))
+            subjectsArch = (subjectArch for subjectArch in SubjectsStudents.objects.filter(student_id = st).exclude(term_number = st.term_number).order_by('term_number'))
             survey = (subjectStudent for subjectStudent in Survey.objects.filter(student_id=st))
 
             if(request.POST.get('message_id', False)):
