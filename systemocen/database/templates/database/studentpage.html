@@ -223,7 +223,7 @@
 			<p>Imie: {{student.user.first_name}}</p>  
 			<p>Nazwisko: {{student.user.last_name}}</p>
 			<p>Nazwa użytkownika:  {{student.user.username}}</p>
-            <p>Semestr:  {{student.term_id.term_number}}</p>
+            <p>Semestr:  {{student.term_number}}</p>
 			<p>Email:  {{student.user.email}}</p>
 			<p>Zdjęcie: </p>
 			<img src="{{student.picture.url}}" class="img-rounded" width="150" >
@@ -262,7 +262,7 @@
 				</thead>
 				<tbody>
                     {% for subjectStudent in subjectsArch %}
-					    <tr><td>{{ subjectStudent.term.term_number }}</td><td><b>{{subjectStudent.subject_id}}</b></td><td>{{subjectStudent.final_grade_id.term1_value}}</td><td>{{subjectStudent.final_grade_id.term2_value}}</td><td>{{subjectStudent.final_grade_id.term3_value}}</td><td>{{subjectStudent.final_grade_id.final_value}}</td></tr>
+					    <tr><td>{{ subjectStudent.term_number }}</td><td><b>{{subjectStudent.subject_id}}</b></td><td>{{subjectStudent.final_grade_id.term1_value}}</td><td>{{subjectStudent.final_grade_id.term2_value}}</td><td>{{subjectStudent.final_grade_id.term3_value}}</td><td>{{subjectStudent.final_grade_id.final_value}}</td></tr>
 				    {% endfor %}
                 </tbody>
 			    </table>
