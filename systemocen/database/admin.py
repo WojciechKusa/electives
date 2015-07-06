@@ -50,7 +50,7 @@ admin.site.register(SubsubjectType)
 
 admin.site.register(FinalGrade)
 admin.site.register(Subgrade)
-#admin.site.register(SubjectsStudents)
+admin.site.register(SubjectsStudents)
 #admin.site.register(SubsubjectsStudents)
 admin.site.register(Message)
 admin.site.register(Survey)
