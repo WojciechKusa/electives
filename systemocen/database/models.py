@@ -62,7 +62,7 @@ class Subject(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     name = models.CharField(max_length=20)
 
-    students = models.ManyToManyField(Student,through='SubjectsStudents',blank=True,null=True)
+    #students = models.ManyToManyField(Student,through='SubjectsStudents',blank=True,null=True)
 
     course_homepage = models.CharField(max_length=20, blank=True,null=True)
     ECTS = models.IntegerField(default=3)
@@ -94,8 +94,8 @@ class Subsubject(models.Model):
     hours = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.subject_id.name + ' (' + self.subsubjecttype_id.name + ') - ' + self.teacher_id.user.first_name + ' ' + self.teacher_id.user.last_name
-        
+        return self.subject_id.name + ' (' + self.subsubjecttype_id.name + ')'
+
         
 class FinalGrade(models.Model):
     #look out for example if you will count average of grades!!!
@@ -179,7 +179,7 @@ class SubsubjectsStudents(models.Model):
     final_grade_id = models.OneToOneField(FinalGrade)
 
     def __str__(self):
-        return self.student_id.user.username 
+        return self.sub_subject_id.subject_id.name + ' (' + self.sub_subject_id.subsubjecttype_id.name + ') ' + self.student_id.user.username
 
 class Message(models.Model):
     student_id = models.ForeignKey(Student)
@@ -203,5 +203,5 @@ class Survey(models.Model):
     comments = models.CharField(max_length=1000,blank=True,null=True)
     date = models.DateTimeField(default=timezone.now)
     def __str__(self):
-        return self.teacher_id.user.name
+        return self.teacher_id.user.username
     

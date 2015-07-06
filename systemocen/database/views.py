@@ -400,24 +400,28 @@ def addstudentstosubject(request):
 def addstudentstosubjectform(request):
     try:
         subject = Subject.objects.get(pk=request.POST['sbjct'])
-        students = Student.objects.get(pk=request.POST['studentstoadd'])
+        students = [Student.objects.get(pk = tmp) for tmp in request.POST.getlist('studentstoadd')]
         subsubjects = Subsubject.objects.filter(subject_id=request.POST['sbjct'])
     except (KeyError, Student.DoesNotExist, Subject.DoesNotExist):
         return HttpResponse("Nie wybrano przedmiotu i/lub studenta.")
         #return HttpResponseRedirect('subjectsstudents')
     else:
-        students = [students]
         for st in students:
             for subsub in subsubjects:
                 if not SubsubjectsStudents.objects.filter(sub_subject_id=subsub, student_id=st):
                     final = FinalGrade(student_id=st, subsubject_id=subsub)
                     final.save()
-                    subsubst = SubsubjectsStudents(sub_subject_id=subsub, student_id=st,
-                                                   final_grade_id=FinalGrade.objects.get(pk=final.pk))
+                    subsubst = SubsubjectsStudents(sub_subject_id=subsub, student_id=st, final_grade_id=final)
                     subsubst.save()
                 else:
                     pass
-        return HttpResponse("Zapisano studentow {} na przedmiot {}".format(students, subject.name))
+            # final_subject = FinalGrade(student_id=st, subsubject_id=subject)
+            # final_subject.save()
+            # sub = SubjectsStudents(student_id = st, subject_id = subject, term_number = st.term_number, final_grade_id = final_subject)
+            sub = SubjectsStudents(student_id = st, subject_id = subject, term_number = st.term_number)
+            sub.save()
+        return HttpResponse("Zapisano studentow na przedmiot {}".format(subject.name))
+        #return HttpResponse(stud_list)
 
 
 def teacheraddsubgrade(request):

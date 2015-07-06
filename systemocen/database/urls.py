@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^teacher/deletesubgrade/$', views.teacherdeletesubgrade, name='teacherdeletesubgrade'),
     url(r'^teacher/addsubgrade/$', views.teacheraddsubgrade, name='teacheraddsubgrade'),
     url(r'^student/subsubject/(?P<subsubject_id>[0-9]+)$', views.studentsubsubject, name='studentsubsubject'),
-    url(r'^admin/database/subjectsstudents', views.addstudentstosubject, name='addstudentstosubject'),
+    url(r'^admin/database/subjectsstudents/add', views.addstudentstosubject, name='addstudentstosubject'),
     url(r'^admin/database/addstudentstosubjectform', views.addstudentstosubjectform, name='addstudentstosubjectform'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
