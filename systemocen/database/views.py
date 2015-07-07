@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
-from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, \
+from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, FinalFinalGrade, Subgrade, SubjectsStudents, \
     SubsubjectsStudents, Message, Survey
 
 
@@ -415,11 +415,10 @@ def addstudentstosubjectform(request):
                     subsubst.save()
                 else:
                     pass
-            # final_subject = FinalGrade(student_id=st, subsubject_id=subject)
-            # final_subject.save()
-            # sub = SubjectsStudents(student_id = st, subject_id = subject, term_number = st.term_number, final_grade_id = final_subject)
-            sub = SubjectsStudents(student_id = st, subject_id = subject, term_number = st.term_number)
-            sub.save()
+            final_subject = FinalFinalGrade(student_id=st, subject_id=subject)
+            final_subject.save()
+            subst = SubjectsStudents(student_id = st, subject_id = subject, term_number = st.term_number, final_grade_id = final_subject)
+            subst.save()
         return HttpResponse("Zapisano studentow na przedmiot {}".format(subject.name))
         #return HttpResponse(stud_list)
 

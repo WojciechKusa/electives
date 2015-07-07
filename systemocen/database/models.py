@@ -111,19 +111,45 @@ class FinalGrade(models.Model):
         ('-','-')
     )
     student_id = models.ForeignKey(Student)
-    subsubject_id = models.ForeignKey(Subsubject,blank=True)
-    #subject_id = models.ForeignKey(Subject,blank=True)
-    final_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    subsubject_id = models.ForeignKey(Subsubject)
+    final_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
     final_date = models.DateTimeField(blank=True,null=True)
-    term1_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term1_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
     term1_date = models.DateTimeField(blank=True,null=True)
-    term2_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term2_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
     term2_date = models.DateTimeField(blank=True,null=True)
-    term3_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES)
+    term3_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
     term3_date = models.DateTimeField(blank=True,null=True)
     
     def __str__(self):
         return self.subsubject_id.subject_id.name + ' ( ' + self.subsubject_id.subsubjecttype_id.name + ' ) ' + self.student_id.user.first_name + ' ' + self.student_id.user.last_name
+
+class FinalFinalGrade(models.Model):
+    #look out for example if you will count average of grades!!!
+    GRADE_CHOICES = (
+        ('2.0', '2.0'),
+        ('3.0', '3.0'),
+        ('3.5', '3.5'),
+        ('4.0', '4.0'),
+        ('4.5', '4.5'),
+        ('5.0', '5.0'),
+        ('zal', 'zal'),
+        ('nb', 'nb'),
+        ('-','-')
+    )
+    student_id = models.ForeignKey(Student)
+    subject_id = models.ForeignKey(Subject)
+    final_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
+    final_date = models.DateTimeField(blank=True,null=True)
+    term1_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
+    term1_date = models.DateTimeField(blank=True,null=True)
+    term2_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
+    term2_date = models.DateTimeField(blank=True,null=True)
+    term3_value = models.CharField(max_length=3, default='-',choices=GRADE_CHOICES,blank=True,null=True)
+    term3_date = models.DateTimeField(blank=True,null=True)
+
+    def __str__(self):
+        return self.subject_id.name + ' ' + self.student_id.user.first_name + ' ' + self.student_id.user.last_name
 
 
 
@@ -163,7 +189,7 @@ class SubjectsStudents(models.Model):
     )
     student_id = models.ForeignKey(Student,blank=True,null=True)
     subject_id = models.ForeignKey(Subject,blank=True,null=True)
-    final_grade_id = models.OneToOneField(FinalGrade,blank=True,null=True)
+    final_grade_id = models.OneToOneField(FinalFinalGrade,blank=True,null=True)
     term_number = models.IntegerField(choices=TERM_CHOICES,default='1',blank=True,null=True)
 
     def __str__(self):

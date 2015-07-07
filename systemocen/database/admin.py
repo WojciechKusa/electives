@@ -1,12 +1,13 @@
 from django.contrib import admin
 
-from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message, Survey
+from .models import Student, Teacher, Subject, SubsubjectType, Subsubject, FinalGrade, FinalFinalGrade, Subgrade, SubjectsStudents, SubsubjectsStudents, Message, Survey
 
 ##-------------inlines
 
 class SubsubjectInline(admin.TabularInline):
     model = Subsubject
     extra = 1
+
 
 ##--------------admin_models
 
@@ -46,9 +47,44 @@ class SubsubjectsStudentsAdmin(admin.ModelAdmin):
     list_display = ['sub_subject_id','student_id']
     list_filter = ['sub_subject_id']
 
+class FinalFinalGradeAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('None', {
+            'fields': (('subject_id','student_id'))
+            }
+        ),
+        ('Grades', {
+            'fields': (
+                ('term1_value','term1_date'),
+                ('term2_value','term2_date'),
+                ('term3_value','term3_date'),
+                ('final_value','final_date'),
+            )
+            }
+        )
+    )
+    list_display = ['subject_id','student_id','final_value']
+    list_filter = ['subject_id','student_id']
+
 class FinalGradeAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('None', {
+            'fields': (('subsubject_id','student_id'))
+            }
+        ),
+        ('Grades', {
+            'fields': (
+                ('term1_value','term1_date'),
+                ('term2_value','term2_date'),
+                ('term3_value','term3_date'),
+                ('final_value','final_date'),
+            )
+            }
+        )
+    )
     list_display = ['subsubject_id','student_id','final_value']
     list_filter = ['subsubject_id','student_id']
+
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ['teacher_id','student_id','is_read','date']
@@ -71,6 +107,7 @@ admin.site.register(SubsubjectType)
 #admin.site.register(Subsubject)
 
 admin.site.register(FinalGrade,FinalGradeAdmin)
+admin.site.register(FinalFinalGrade,FinalFinalGradeAdmin)
 admin.site.register(Subgrade,SubgradeAdmin)
 admin.site.register(SubjectsStudents,SubjectsStudentsAdmin)
 admin.site.register(SubsubjectsStudents,SubsubjectsStudentsAdmin)
