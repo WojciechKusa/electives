@@ -20,6 +20,8 @@
 			<h1>Wirtualny dziekanat - Wiadomości</h1>
         	{% elif page_id == '5' %}
 			<h1>Wirtualny dziekanat - Twoje dane</h1>
+			{% elif page_id == '6' %}
+			<h1>Wirtualny dziekanat - Wyniki ankiet</h1>
         	{% endif %}
 
 	</div>
@@ -31,24 +33,35 @@
         			<li><a href="{% url 'teacherpage' '1'%}">Prowadzone przedmioty</a></li>
         			<li><a href="{% url 'teacherpage' '2'%}">Wiadomości</a></li>
         			<li><a href="{% url 'teacherpage' '5'%}">Twoje dane</a></li>
+					<li><a href="{% url 'teacherpage' '6'%}">Wyniki ankiet</a></li>
                     <li><a href="{% url 'logout' %}">Wyloguj</a></li>
         			{% elif page_id == '1' %}
         			<li><a href="{% url 'teacherpage' '0'%}">Strona główna</a></li>
         			<li  class="active" ><a href="{% url 'teacherpage' '1'%}">Prowadzone przedmioty</a></li>
         			<li><a href="{% url 'teacherpage' '2'%}">Wiadomości</a></li>
         			<li><a href="{% url 'teacherpage' '5'%}">Twoje dane</a></li>
+					<li><a href="{% url 'teacherpage' '6'%}">Wyniki ankiet</a></li>
                     <li><a href="{% url 'logout' %}">Wyloguj</a></li>
         			{% elif page_id == '2' or  page_id == '3' or page_id == '4'%}
         			<li><a href="{% url 'teacherpage' '0'%}">Strona główna</a></li>
         			<li><a href="{% url 'teacherpage' '1'%}">Prowadzone przedmioty</a></li>
         			<li   class="active" ><a href="{% url 'teacherpage' '2'%}">Wiadomości</a></li>
         			<li><a href="{% url 'teacherpage' '5'%}">Twoje dane</a></li>
+					<li><a href="{% url 'teacherpage' '6'%}">Wyniki ankiet</a></li>
+                    <li><a href="{% url 'logout' %}">Wyloguj</a></li>
+					{% elif page_id == '6' %}
+        			<li><a href="{% url 'teacherpage' '0'%}">Strona główna</a></li>
+        			<li><a href="{% url 'teacherpage' '1'%}">Prowadzone przedmioty</a></li>
+        			<li><a href="{% url 'teacherpage' '2'%}">Wiadomości</a></li>
+        			<li><a href="{% url 'teacherpage' '5'%}">Twoje dane</a></li>
+					<li class="active" ><a href="{% url 'teacherpage' '6'%}">Wyniki ankiet</a></li>
                     <li><a href="{% url 'logout' %}">Wyloguj</a></li>
         			{% elif page_id == '5' %}
         			<li><a href="{% url 'teacherpage' '0'%}">Strona główna</a></li>
         			<li><a href="{% url 'teacherpage' '1'%}">Prowadzone przedmioty</a></li>
         			<li><a href="{% url 'teacherpage' '2'%}">Wiadomości</a></li>
         			<li class="active" ><a href="{% url 'teacherpage' '5'%}">Twoje dane</a></li>
+					<li class="active" ><a href="{% url 'teacherpage' '6'%}">Wyniki ankiet</a></li>
                     <li><a href="{% url 'logout' %}">Wyloguj</a></li>
         			{% endif %}
       			</ul>
@@ -156,6 +169,31 @@
                         <p>Email:  {{teacher.user.email}}</p>
                         <p>Zdjęcie: </p>
                         <img src="{{teacher.picture.url}}" class="img-rounded" width="150" >
+						
+						
+						
+						
+	{% elif page_id == '6' %}
+			<h2>{{teacher.user.first_name}} {{teacher.user.last_name}} ocena Twojej pracy</h2>
+			
+			
+			
+			<table class="table table-hover">
+				<thead>
+				  <tr>
+					<th>Przedmiot</th>
+					<th>Ocena</th>
+					<th>Uwagi</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {% for prowadzacy in survey_teacher %}
+				<tr><td>{{prowadzacy.subject_id.name}}</td><td>{{prowadzacy.teacher_grade}}</td><td>{{prowadzacy.comments}}</td></tr>
+				  {% endfor %}
+				</tbody>
+			  </table>
+						
+						
                     {% endif %}
                     </div>
             </div>

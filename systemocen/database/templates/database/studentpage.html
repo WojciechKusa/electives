@@ -242,8 +242,26 @@
 				  </tr>
 				</thead>
 				<tbody>
-				<tr><td><b>Tomek</b></td></tr>
-				
+				 
+				</tbody>
+			  </table>
+			<br />
+
+			<h2>{{student.user.first_name}} {{student.user.last_name}} ocenieni przez Ciebie prowadzący:</h2>
+			
+			<table class="table table-hover">
+				<thead>
+				  <tr>
+					<th>Prowadzący</th>
+					<th>Przedmiot</th>
+					<th>Ocena</th>
+					<th>Uwagi</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  {% for prowadzacy in survey %}
+				<tr><td>{{prowadzacy.teacher_id.user.first_name}} {{prowadzacy.teacher_id.user.last_name}}</td><td>{{prowadzacy.subject_id.name}}</td><td>{{prowadzacy.teacher_grade}}</td><td>{{prowadzacy.comments}}</td></tr>
+				  {% endfor %}
 				</tbody>
 			  </table>
 

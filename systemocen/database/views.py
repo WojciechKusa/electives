@@ -62,7 +62,7 @@ def studentpage(request, page_id):
             subjectsArch = (subjectArch for subjectArch in
                             SubjectsStudents.objects.filter(student_id=st).exclude(term_number=st.term_number).order_by(
                                 'term_number'))
-            survey = (subjectStudent for subjectStudent in Survey.objects.filter(student_id=st))
+            survey = (prowadzacy for prowadzacy in Survey.objects.filter(student_id=st))
 
             if (request.POST.get('message_id', False)):
                 messageToMarkRead = Message.objects.filter(student_id=st).filter(is_read=False).get(
@@ -117,10 +117,11 @@ def teacherpage(request, page_id):
                 message.save()
             messages = Message.objects.filter(teacher_id=te).filter(is_read=False).order_by('-date')
             allMessages = Message.objects.filter(teacher_id=te).order_by('-date')
+            survey_teacher = (prowadzacy for prowadzacy in Survey.objects.filter(teacher_id=te))
 
             return render(request, 'database/teacherpage.html',
                           {'teacher': te, 'subjects': subjects, 'messages': messages, 'allMessages': allMessages,
-                           'page_id': page_id, 'subSubjects': subSubjects, 'allStudents': allStudents})
+                           'page_id': page_id, 'subSubjects': subSubjects, 'allStudents': allStudents, 'survey_teacher': survey_teacher})
         except Teacher.DoesNotExist:
             return HttpResponse("Nie ma nauczyciela")
         except Student.DoesNotExist:
