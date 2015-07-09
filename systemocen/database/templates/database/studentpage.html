@@ -243,6 +243,37 @@
 				</thead>
 				<tbody>
 				 
+				 {% for subjectStudent in subjectsStudents %}
+				 <tr>
+					<td><b>{{subjectStudent.student_id.user.first_name}} {{subjectStudent.student_id.user.last_name}}</b></td>
+					<form action="{% url 'teacherchangegrade' %}" method='post'>
+					{% csrf_token %}
+					
+					<td>
+						przedmiot
+					</td>
+					<td>
+						<select name="term3" class="form-control">
+							<option {% if subjectStudent.final_grade_id.term3_value == '-' %} selected="selected" {% endif %}>-</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '5.0' %} selected="selected" {% endif %}>5.0</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '4.5' %} selected="selected" {% endif %}>4.5</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '4.0' %} selected="selected" {% endif %}>4.0</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '3.5' %} selected="selected" {% endif %}>3.5</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '3.0' %} selected="selected" {% endif %}>3.0</option>
+							<option {% if subjectStudent.final_grade_id.term3_value == '2.0' %} selected="selected" {% endif %}>2.0</option>
+						</select>
+					</td>
+					<td>
+						uwagi
+					</td>
+					</tr>
+								
+				<input type="hidden" name="subject_id" value="{{subject.pk}}" />
+				<input type="hidden" name="student_id" value="{{subjectStudent.student_id.pk}}" />
+				<input type="hidden" name="subject_type" value="subject" />
+				{% endfor %}
+				 
+				 
 				</tbody>
 			  </table>
 			<br />
