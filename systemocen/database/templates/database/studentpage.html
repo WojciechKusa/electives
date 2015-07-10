@@ -237,41 +237,44 @@
 				  <tr>
 					<th>Prowadzący</th>
 					<th>Przedmiot</th>
-					<th>Ocena</th>
+					<th>Ocena (skala 1-5)</th>
 					<th>Uwagi</th>
 				  </tr>
 				</thead>
 				<tbody>
 				 
-				 {% for subjectStudent in subjectsStudents %}
+				 {% for prowadzacy in survey %}
 				 <tr>
-					<td><b>{{subjectStudent.student_id.user.first_name}} {{subjectStudent.student_id.user.last_name}}</b></td>
-					<form action="{% url 'teacherchangegrade' %}" method='post'>
+					<td><b>{{prowadzacy.teacher_id.user.first_name}} {{prowadzacy.teacher_id.user.last_name}}</b></td>
+					<form action="{% url 'studentaddsurvey' %}" method='post'>
 					{% csrf_token %}
 					
 					<td>
-						przedmiot
+						{{prowadzacy.subject_id.name}}
 					</td>
 					<td>
-						<select name="term3" class="form-control">
-							<option {% if subjectStudent.final_grade_id.term3_value == '-' %} selected="selected" {% endif %}>-</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '5.0' %} selected="selected" {% endif %}>5.0</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '4.5' %} selected="selected" {% endif %}>4.5</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '4.0' %} selected="selected" {% endif %}>4.0</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '3.5' %} selected="selected" {% endif %}>3.5</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '3.0' %} selected="selected" {% endif %}>3.0</option>
-							<option {% if subjectStudent.final_grade_id.term3_value == '2.0' %} selected="selected" {% endif %}>2.0</option>
+						<select name="ankieta" class="form-control">
+							<option {% if survey.teacher_grade == '1' %} selected="selected" {% endif %}>1</option>
+							<option {% if survey.teacher_grade == '2' %} selected="selected" {% endif %}>2</option>
+							<option {% if survey.teacher_grade == '3' %} selected="selected" {% endif %}>3</option>
+							<option {% if survey.teacher_grade == '4' %} selected="selected" {% endif %}>4</option>
+							<option {% if survey.teacher_grade == '5' %} selected="selected" {% endif %}>5</option>
+						
+							
 						</select>
 					</td>
+					<td><textarea class="form-control" rows="3" name="uwagi">{{prowadzacy.comments}}</textarea></td>
 					<td>
-						uwagi
+						<td><input type="submit" class="btn btn-default" value="Prześlij" /></td>
 					</td>
 					</tr>
 								
-				<input type="hidden" name="subject_id" value="{{subject.pk}}" />
-				<input type="hidden" name="student_id" value="{{subjectStudent.student_id.pk}}" />
-				<input type="hidden" name="subject_type" value="subject" />
-				{% endfor %}
+				<input type="hidden" name="subject_id" value="{{survey.subject_id.pk}}" />
+				<input type="hidden" name="student_id" value="{{survey.student_id.pk}}" />
+				<input type="hidden" name="teacher_grade" value="{{survey.teacher_grade.pk}}" />
+				
+				
+				
 				 
 				 
 				</tbody>
@@ -291,7 +294,7 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  {% for prowadzacy in survey %}
+				  
 				<tr><td>{{prowadzacy.teacher_id.user.first_name}} {{prowadzacy.teacher_id.user.last_name}}</td><td>{{prowadzacy.subject_id.name}}</td><td>{{prowadzacy.teacher_grade}}</td><td>{{prowadzacy.comments}}</td></tr>
 				  {% endfor %}
 				</tbody>

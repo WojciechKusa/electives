@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^teacher/addgrade/$', views.teacheraddgrade, name='teacheraddgrade'),
     url(r'^teacher/changegrades/(?P<sbjct_id>[0-9]+)$', views.teacherviewsubjectfinalgrades, name='teacherviewsubjectfinalgrades'),
     url(r'^teacher/changefinalgrades/$', views.teacherchangegrade, name='teacherchangegrade'),
+    url(r'^student/5/$', views.studentaddsurvey, name='studentaddsurvey'),
     url(r'^student/subject/(?P<subject_id>[0-9]+)$', views.studentsubject, name='studentsubject'),
     url(r'^teacher/subsubject/(?P<subsubject_id>[0-9]+)$', views.teachersubsubject, name='teachersubsubject'),
     url(r'^teacher/subsubject/(?P<subsubject_id>[0-9]+)/student/(?P<student_id>[0-9]+)$', views.subteacherstudent, name='subteacherstudent'),

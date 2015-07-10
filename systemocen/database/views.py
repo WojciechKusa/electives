@@ -483,6 +483,97 @@ def studentsubsubject(request, subsubject_id):
             return HttpResponse("Brak przedmiotu")
     else:
         return HttpResponse("Niezalogowany")
+    
+    
+def studentaddsurvey(request):
+    if request.user.is_authenticated():
+        try:
+            ankieta = request.POST['ankieta']
+            uwagi = request.POST['uwagi']
+            subject_id = request.POST['subject_id']
+            teacher_grade = request.POST['teacher_grade']
+            #te = Teacher.objects.get(pk=request.POST['teacher_id'])
+            st = Student.objects.get(user=request.user)
+            #subject = Subject.objects.get(student_id=st)
+            #subject = Survey.objects.get(pk=subject_id)
+            #subjectStudent = SubjectsStudents.objects.get(subject_id=subject, student_id=st)
+            
+            tgrade = Survey.objects.get(student_id=st)
+            tgrade.teacher_grade = ankieta;
+            tgrade.comments = uwagi;
+            #tgrade.student_id = st
+            #tgrade.subject_id = subject.subject_id
+            tgrade.save()
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except Student.DoesNotExist:
+            return HttpResponse("Dany student nie istnieje")
+        except SubjectsStudents.DoesNotExist:
+            return HttpResponse("Student nie jest zapisany na ten przedmiot")
+        except Teacher.DoesNotExist:
+            return HttpResponse("Nie ma nauczyciela")
+        except Subject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+        except Subsubject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+
+    else:
+        return HttpResponse("Niezalogowany")
+
+
+def teacherchangegrade2(request):
+    if request.user.is_authenticated():
+        try:
+            term1 = request.POST['term1']
+            term2 = request.POST['term2']
+            term3 = request.POST['term3']
+            final = request.POST['final']
+            subject_id = request.POST['subject_id']
+            subject_type = request.POST['subject_type']
+            st = Student.objects.get(pk=request.POST['student_id'])
+            te = Teacher.objects.get(user=request.user)
+            if subject_type == 'subject':
+                subject = Subject.objects.get(pk=subject_id)
+                subjectStudent = SubjectsStudents.objects.get(subject_id=subject, student_id=st)
+                finalGrade = subjectStudent.final_grade_id
+                finalGrade.term1_value = term1;
+                finalGrade.term1_date = timezone.now()
+                finalGrade.term2_value = term2;
+                finalGrade.term2_date = timezone.now()
+                finalGrade.term3_value = term3;
+                finalGrade.term3_date = timezone.now()
+                finalGrade.final_value = final;
+                finalGrade.final_date = timezone.now()
+                finalGrade.save()
+            elif subject_type == 'subsubject':
+                subsubject = Subsubject.objects.get(pk=subject_id)
+                subsubjectStudent = SubsubjectsStudents.objects.get(sub_subject_id=subsubject, student_id=st)
+                finalGrade = subsubjectStudent.final_grade_id
+                finalGrade.term1_value = term1;
+                finalGrade.term1_date = timezone.now()
+                finalGrade.term2_value = term2;
+                finalGrade.term2_date = timezone.now()
+                finalGrade.term3_value = term3;
+                finalGrade.term3_date = timezone.now()
+                finalGrade.final_value = final;
+                finalGrade.final_date = timezone.now()
+                finalGrade.save()
+
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        except Student.DoesNotExist:
+            return HttpResponse("Dany student nie istnieje")
+        except SubjectsStudents.DoesNotExist:
+            return HttpResponse("Student nie jest zapisany na ten przedmiot")
+        except Teacher.DoesNotExist:
+            return HttpResponse("Nie ma nauczyciela")
+        except Subject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+        except Subsubject.DoesNotExist:
+            return HttpResponse("Brak przedmiotu")
+
+    else:
+        return HttpResponse("Niezalogowany")
+
 
 
 def logout_view(request):
