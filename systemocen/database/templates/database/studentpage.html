@@ -226,8 +226,10 @@
             <p>Semestr:  {{student.term_number}}</p>
 			<p>Email:  {{student.user.email}}</p>
 			<p>Zdjęcie: </p>
+
+            {% if student.picture %}
 			<img src="{{student.picture.url}}" class="img-rounded" width="150" >
-        	
+        	{% endif %}
 			
 			{% elif page_id == '5' %}
 			<h2>{{student.user.first_name}} {{student.user.last_name}} oceń prowadzących przedmioty</h2>

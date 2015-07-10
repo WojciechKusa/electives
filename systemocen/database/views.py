@@ -179,7 +179,7 @@ def teacherstudent(request, subject_id, student_id):
             if SubjectsStudents.objects.filter(student_id=st.pk).filter(subject_id=subject.pk):
                 subGrades = (subGrade for subGrade in Subgrade.objects.all().filter(student_id=st).filter(
                     sub_subject_id__subject_id=subject).order_by('-date'))
-                subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(student_id=st))
+                subjectsStudents = (subjectStudent for subjectStudent in SubjectsStudents.objects.filter(student_id=st,subject_id=subject))
                 subsubjectsStudents = (subsubjectStudent for subsubjectStudent in
                                        SubsubjectsStudents.objects.filter(student_id=st))
             return render(request, 'database/teacherstudent.html',
